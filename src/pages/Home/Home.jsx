@@ -201,12 +201,13 @@ useEffect(() => {
         </section>
         <section className='mt-4'>
           <h2>Recent Transactions</h2>
-          <>
+          <RecentTransaction transactions={displayAllTransactions ? transactions : transactions.slice(0, 5)} />
+          {/* <>
           {currentBalance >= totalAmount && (<RecentTransaction transactions={displayAllTransactions ? transactions : transactions.slice(0, 5)} />)}
           </>
           {transactions.length > 1 ? <>
           {currentBalance >= totalAmount && (<RecentTransaction transactions={displayAllTransactions ? transactions : transactions.slice(0, 5)} />)}
-          </> : <h2 className='px-2 py-1 bg-white mb-2 lg:px-4 lg:py-2 rounded-lg lg:rounded-xl'>No transactions to display</h2>}
+          </> : <h2 className='px-2 py-1 bg-white mb-2 lg:px-4 lg:py-2 rounded-lg lg:rounded-xl'>No transactions to display</h2>} */}
         </section>
       </div>
     </div>

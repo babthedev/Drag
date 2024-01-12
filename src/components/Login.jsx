@@ -91,7 +91,7 @@ const Login = () => {
 
   return (
     <div className='w-screen h-screen overflow-hidden'>
-      <div className='flex flex-row lg:w-1/2 w-2/3 mx-auto my-24 h-3/5 gap-0'>
+      <div className='flex flex-row lg:w-1/2 w-3/4 mx-auto my-24 h-4/6 gap-0'>
         <div className='hidden w-full h-full bg-greenAccent md:block -mr-8 rounded-s-2xl text-center text-slightDark text-3xl '><h2 className='mt-8'>DRAG</h2></div>
         <div className='w-full h-full md:mx-6 bg-white rounded-xl md:rounded-e-2xl -ml-6 px-10 '>
           {signInOn ?

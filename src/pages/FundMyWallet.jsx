@@ -15,7 +15,7 @@ const FundMyWallet = ({handleLargeIncrement, handleSmallIncrement, currentBalanc
        </div>
       </div>
       <section className='lg:w-4/5 mx-auto mt-10'>
-        <div onClick={handleLargeIncrement} className='flex justify-between bg-white p-4 rounded-xl hover:border-greenAccent cursor-pointer hover:border-2'>
+        <div onClick={handleLargeIncrement} className='flex justify-between bg-white p-4 rounded-xl hover:border-greenAccent cursor-pointer hover:border-2 gap-2'>
         <div>
           <h2 className='font-extrabold text-2xl mb-4'>Bank Transfer</h2>
           <p className='text-gray-500 text-base font-normal'>Click to make a transfer</p>
@@ -40,14 +40,14 @@ const FundMyWallet = ({handleLargeIncrement, handleSmallIncrement, currentBalanc
         </div>
         </div>
         {currentBalance > 1 && <>
-        {currentBalance === totalAmount * 2 && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 w-1/2 mt-20'>Your Current balance will last two days</h2>}
+        {currentBalance === totalAmount * 2 && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 px-1 w-1/2 mt-20'>Your Current balance will last two days</h2>}
         </>}
-        {currentBalance < totalAmount  && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 w-1/2 mt-20'>Your balance has been exhausted</h2>}
+        {currentBalance < totalAmount  && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 px-1 w-1/2 mt-20'>Your balance has been exhausted</h2>}
         {currentBalance > totalAmount && <>
-        {currentBalance < totalAmount * 2  && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 w-1/2 mt-20'>Your Current balance will last only one day</h2>}
+        {currentBalance < totalAmount * 2  && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 px-1 w-1/2 mt-20'>Your Current balance will last only one day</h2>}
         </>}
         {currentBalance > totalAmount * 2 && <>
-        {currentBalance < totalAmount * 3 && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 w-1/2 mt-20'>Your Current balance will last two days</h2>}
+        {currentBalance < totalAmount * 3 && <h2 className='bg-red-600 text-white text-center rounded-lg py-2 px-1 w-1/2 mt-20'>Your Current balance will last two days</h2>}
         </>}
         
       </section>
