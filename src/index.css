@@ -7,11 +7,13 @@
 body{
     font-family: 'Josefin Sans', sans-serif;
 }
-.hero-text{
-    font-size: 5rem;
-    line-height: 6.5rem;
-    text-align: start;
-}
+@media (min-width: 1024px) {
+    .hero-text{
+      font-size: 4.5rem;
+      line-height: 4rem;
+      text-align: start;
+    }
+  }
 .react-toastify__progress-bar--success::before {
     background-color: black !important;
   }
