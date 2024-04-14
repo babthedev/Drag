@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`h-3/4 flex py-2 lg:py-4 lg:font-bold lg:text-4xl items-center justify-between sticky ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} fixed top-0 px-6 md:px-16 lg:px-36 left-0 shadow-lg`}>
+    <header className={`h-3/4 flex py-2 lg:py-0 lg:font-bold lg:text-4xl items-center justify-between sticky ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'} fixed top-0 px-6 md:px-16 lg:px-36 left-0 shadow-lg`}>
       <Link to="/">
         <img src={isDarkMode ? darkLogo : lightLogo} width="100px" alt="" />
       </Link>
@@ -50,8 +50,8 @@ const Header = () => {
                 className={`text-base lg:text-2xl ${isDarkMode ? "hover:bg-black hover:text-gray-50 " : "hover:bg-white text-white hover:text-black"} hover:text-black font-bold lg:px-20 lg:py-6 rounded-lg`}
                 onClick={themeSwitch}
             >
-                <img src={moon} className={` cursor-pointer ${isDarkMode ? 'hidden' : ''} h-8`} alt="" onClick={themeSwitch} />
-              <img src={sun} className={` cursor-pointer ${isDarkMode ? '' : 'hidden'} h-8`} alt="" onClick={themeSwitch} />
+                <img src={sun} className={` cursor-pointer ${isDarkMode ? 'hidden' : ''} h-8`} alt="" onClick={themeSwitch} />
+              <img src={moon} className={` cursor-pointer ${isDarkMode ? '' : 'hidden'} h-8`} alt="" onClick={themeSwitch} />
             </h1>
     </header>
   );

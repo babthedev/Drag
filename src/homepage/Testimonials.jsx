@@ -1,8 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TestimonialCard from "./TestimonialCard";
 import data from "../data";
+import { useSelector } from 'react-redux';
+import { selectDarkMode } from '../features/homeSlice';
+import backDark from "../assets/back-dark.png"
+import backLight from "../assets/back-light.png"
+import forwardDark from "../assets/forward-dark.png"
+import forwardLight from "../assets/forward-light.png"
 
 const Testimonials = ()=> {
+  const isDarkMode = useSelector(selectDarkMode);
     const [showScrollButtons, setShowScrollButtons] = useState(false);
     const carouselRef = useRef(null);
   const { testimonials } = data;
@@ -49,8 +56,8 @@ const Testimonials = ()=> {
           </div>
 
           {showScrollButtons && (<div className='flex justify-between absolute w-full'>
-          <button onClick={() => scrollCarousel('left')} className='left-0 absolute top-24 '><img src="" width="50px" alt="left button" /></button>
-          <button onClick={() => scrollCarousel('right')} className='right-0 absolute top-24' ><img src="" width="50px" alt="right button" /></button>
+          <button onClick={() => scrollCarousel('left')} className='left-0 absolute top-32 '><img src={isDarkMode ? backDark : backLight} width="50px" alt="" /></button>
+          <button onClick={() => scrollCarousel('right')} className='right-0 absolute top-32' ><img src={isDarkMode ? forwardDark : forwardLight} width="50px" alt="" /></button>
         </div>)}
         </section>
     </div>
