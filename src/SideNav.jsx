@@ -20,6 +20,10 @@ import { initializeApp } from "firebase/app";
 import dashDark from "./assets/dashboard-dark.png"
 import loglight from "./assets/logout-light.png"
 import logDark from "./assets/logout-dark.png"
+import menuDark from "./assets/menu-dark.png"
+import menuLight from "./assets/menu-light.png"
+import closeDark from "./assets/close-dark.png"
+import closeLight from "./assets/close-light.png"
 
 const SideNav = () => {
     const dispatch = useDispatch()
@@ -71,9 +75,11 @@ const SideNav = () => {
         <Link to="/">
             <img src={isDarkMode ? lightLogo : darkLogo}  className='mx-auto w-28' alt="" />
         </Link>
-        {!isClose && <h1 onClick={()=>{setIsClose(!isClose)}} className='md:hidden absolute right-8 top-3 text-3xl'>M</h1>}
+        {!isClose && <h1 onClick={()=>{setIsClose(!isClose)}} className='md:hidden absolute right-8 top-3 text-3xl'>
+        <img src={isDarkMode ? menuLight : menuDark} width="45" className='' alt="" />
+            </h1>}
         {isClose &&<NavLink to="/profile" onClick={()=>{setIsClose(!isClose)}} className="ml-auto">
-            <div className="bg-gray-100 md:py-8 w-full rounded-xl md:px-6">
+            <div className="bg-gray-100 md:py-8 w-full rounded-xl md:px-6 mt-3 ">
                 {user.photoURL ?  
                     (<img src={user.photoURL} alt="" className='rounded-full' width="50" />) 
                     :
@@ -85,7 +91,9 @@ const SideNav = () => {
             {/* MOBILE NAV */}
         {isClose && 
         <div className="flex flex-col gap-4 md:items-center items-center mt-8 w-full md:hidden">
-            {<h1 className='cursor-pointer ml-auto mb-4 absolute top-6 text-3xl mt- right-8' onClick={()=>{setIsClose(!isClose)}}>X</h1>}
+            {<h1 className='cursor-pointer ml-auto mb-4 absolute top-3 text-3xl mt- right-8' onClick={()=>{setIsClose(!isClose)}}>
+            <img src={isDarkMode ? closeLight : closeDark} width="45" className='' alt="" />
+                </h1>}
         <NavLink to="/" className={({isActive})=> isActive && ` ${isDarkMode ? "border-black border text-white" : "border-white border text-black"}  md:w-full p-4`} onClick={()=>{setIsClose(!isClose)}}>
             <div className={`text-2xl hover:text-black font-bold md:py-6 rounded-lg ${isDarkMode ? "hover:border-black hover:border hover:text-gray-50 text-white" : "hover:border-white hover:border  hover:text-black text-white"} flex gap-2 items-center w-full hover:p-4`}>
                 <img src={isDarkMode ? dashIcon : dashDark} width="40px" className={` xl:block `} alt="" />
