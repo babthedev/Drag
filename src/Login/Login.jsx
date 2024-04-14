@@ -151,7 +151,10 @@ const Login = () => {
             <SignIn /> :
             <>
               {error && <p className={`${isDarkMode ? "text-white border-white" : "text-black border-black"} text-2xl text-center p-2 mx-2 border-2  mt-6 -mb-10 lg:mb-12 font-bold`}>{error}</p>}
-              <h3 className='font-extrabold lg:text-5xl text-3xl mt-20 lg:mt-0 text-center'>Get Started With DRAG</h3>
+        <Link to="/">
+          <h1 className={`text-center justify-self-end mt-4 mx-4 w-1/5 text-xl ${isDarkMode ? "text-black bg-white" : "text-white bg-black"} p-2`}>Back</h1>
+        </Link>
+              <h3 className='font-extrabold lg:text-5xl text-3xl mt-8 lg:mt-0 text-center'>Get Started With DRAG</h3>
               <p className='text-xl text-gray-500 mt-6 text-center'>Please provide your name, email address and phone number</p>
               <form action="" className='lg:w-1/2 lg:mx-auto mx-12 md:mx-8 text-2xl' onSubmit={handleSignUp}>
                 {step === 1 && <div className='mt-6'>
@@ -239,7 +242,7 @@ const Login = () => {
                 {step !== 3 && <h2 onClick={handleNext} className={`rounded-lg py-4 px-8  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black"}  hover:border-2 hover:text-black hover:font-bold`}>Next</h2>}
               </div>
               </form>
-              <button className={` mx-auto justify-center items-center gap-4 hover:border-2 py-4 text-2xl rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "} flex w-2/3 px-auto`} onClick={handleSignInWithGoogle}><img src={isDarkMode ? googleDark : googleLight} alt="" width="50px"/>  Sign up with Google</button>
+              <button className={` mx-auto justify-center items-center gap-4 hover:border-2 py-4 text-2xl rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "} flex w-2/3 px-auto text-lg md:text-xl lg:text-2xl`} onClick={handleSignInWithGoogle}><img src={isDarkMode ? googleDark : googleLight} alt="" width="50px" className='lg:w-12 w-6'/>  Sign up with Google</button>
               <h2 className='mt-4 text-center text-xl'>Already have an account? <span className='text-gray-500 cursor-pointer' onClick={handleSignInClick}>Sign in</span></h2>
             </>
           }

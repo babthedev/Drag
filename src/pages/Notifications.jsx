@@ -10,11 +10,7 @@ const Notifications = () => {
       <div className={`${isDarkMode ? "bg-black text-white" : "bg-white text-black"} md:w-4/5 lg:-mt-8 p-4 md:p-8 lg:p-12`}>
       <h1 className="font-bold xl:text-6xl text-3xl lg:text-5xl border-b border-gray-300">Your Notifications</h1>
       <div className='mt-8'> 
-      <NotificationCard/>
-      <NotificationCard/>
-      <NotificationCard/>
-      <NotificationCard/>
-      <NotificationCard/>
+      <h3 className='text-xl md:text-2xl lg:text-3xl'>You currently have no notifications</h3>
       </div>
       </div>
       

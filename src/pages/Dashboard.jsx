@@ -24,7 +24,6 @@ const Dashboard = () => {
     const isDarkMode = useSelector(selectDarkMode);
     const addNew = useSelector(addNewSaving);
     const savings = useSelector(selectAllSavings);
-    // console.log(savings);
     const initialBalance = useSelector(currentBalance);
 
 
@@ -44,7 +43,7 @@ useEffect(() => {
                 dispatch(updateBalance(initialBalance - newTotalDailyAmount));
             }
         });
-    }, 1000);
+    }, 10 * 1000);
 
     return () => clearInterval(interval);
 }, [dispatch, initialBalance, savings]);
@@ -114,17 +113,17 @@ useEffect(() => {
       />
                     </div>
                     <div className='flex gap-4 w-full'>
-                        <div className={`p-6 md:p-8  py-4 rounded-xl w-1/2 ${isDarkMode ? "text-black bg-white" : " text-white bg-black"} `}>
+                        <div className={`p-6 md:px-4  py-4 rounded-xl w-1/2 ${isDarkMode ? "text-black bg-white" : " text-white bg-black"} `}>
                             <div className={`flex flex-col justify-center items-center gap-2`}>
                                 <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>{savings.length}</h1>
                                 <h1 className=" text-base text-wrap md:text-2xl">Number of Savings</h1>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2">
-                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>12</h1>
+                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>0</h1>
                                 <h1 className=" text-base mt-2 text-wrap md:text-2xl">Completed Savings</h1>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2">
-                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>12</h1>
+                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>{savings.length}</h1>
                                 <h1 className=" text-base mt-2 text-wrap md:text-2xl">Ongoing Savings</h1>
                             </div>
                         </div>

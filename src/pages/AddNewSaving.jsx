@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDarkMode } from '../features/homeSlice';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import { addNewSaving, selectAllSavings, savingAdded, updateSaving, toggleAddSavings, addNewSavingFirestore,updateSavingFirestore } from '../features/dashSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
@@ -102,7 +103,8 @@ const AddNewSaving = ({ handleCancel, initialValues }) => {
         {/* AddNewSaving form functionalities */}
         <div className={`w-full h-full ${isDarkMode ? "bg-black" : "bg-white"} px-8`}>
           {error && <p className='text-red-500 mt-6 -mb-10 font-bold'>{error}</p>}
-          <h3 className='font-extrabold text-5xl mt-16 '>{initialValues ? "Update your saving" : "Start a new saving target"}</h3>
+          <h1 className={`text-center justify-self-end mt-6 mx-4 w-1/5 text-xl ${isDarkMode ? "text-black bg-white" : "text-white bg-black"} p-2`} onClick={initialValues ? handleCancel : toggleAdd}>Back</h1>
+          <h3 className={`font-extrabold ${isDarkMode ? "text-white" : "text-black"} text-3xl lg:text-5xl mt-4`}>{initialValues ? "Update your saving" : "Start a new saving target"}</h3>
           <p className='text-xl text-gray-500 mt-2'>Fill in the details of your target.</p>
           <form action="#" className='flex flex-col mt-8' onSubmit={handleFormSubmit}>
             <label htmlFor="savingTitle" className={`text-2xl ${isDarkMode ? "text-white" : "text-black"}`}>Title</label>

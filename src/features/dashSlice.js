@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFirestore, collection, getDocs, updateDoc, deleteDoc, doc, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, getDoc, updateDoc, deleteDoc, doc, addDoc } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged  } from "firebase/auth";
 import firebaseConfig from "../firebase";
@@ -9,16 +9,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app)
 
-// const getUserSavingsCollectionRef = (userId) =>collection(db, `users/${userId}/savings`)
-
-
-
 const initialState = {
     addNew: false,
     updateProfile: false,
     mobileNav: true,
-    currentBalance: 10000, // Assuming initial balance is 10000
     savings: [],
+    dailyCounts: [],
+    currentBalance: 10000
 };
 
 const calculateProgress = (amountSaved, targetAmount) => {
@@ -63,6 +60,14 @@ const dashSlice = createSlice({
                 }
             }
         },
+        updateDailyCount(state, action) {
+            const { date, count } = action.payload;
+            state.dailyCounts.push({ date, count });
+            // Keep only the last 5 days
+            if (state.dailyCounts.length > 5) {
+              state.dailyCounts.shift();
+            }
+        },
         updateAmountSaved(state, action){
             const { id, daily } = action.payload;
             const savingIndex = state.savings.findIndex(saving => saving.id === id);
@@ -74,12 +79,10 @@ const dashSlice = createSlice({
               state.savings[savingIndex].progress = progress;
           
               if (progress === 100) {
-                // toast.success(`Congratulations! ${state.savings[savingIndex].title} reached 100% progress.`);
-                // Dynamically update the total daily amount when a saving target reaches its target amount
                 state.totalDailyAmount -= daily;
               }
             }
-          },
+        },
         deleteSaving(state, action) {
             state.savings = state.savings.filter(saving => saving.id !== action.payload);
         },
@@ -89,15 +92,11 @@ const dashSlice = createSlice({
     }
 });
 
-export const { toggleAddSavings, savingAdded, updateSaving, updateAmountSaved, deleteSaving, initializeSavings, updateBalance, toggleMobileNav, toggleUpdateProfile } = dashSlice.actions;
-
-
-  
+export const { toggleAddSavings, savingAdded, updateSaving, updateAmountSaved, deleteSaving, initializeSavings, updateBalance, toggleMobileNav, toggleUpdateProfile, updateDailyCount } = dashSlice.actions;
 
 export const fetchInitialSavings = () => async (dispatch) => {
     try {
         let userId;
-        // Listen for authentication state changes
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 userId = user.uid;
@@ -108,7 +107,8 @@ export const fetchInitialSavings = () => async (dispatch) => {
                     const data = doc.data();
                     const parsedAmount = parseFloat(data.amountSaved || 0);
                     const parsedProgress = parseFloat(data.progress || 0);
-                    savingsData.push({ ...data, id: doc.id, amountSaved: parsedAmount, progress: parsedProgress });
+                    const dateString = data.date ? data.date.toISOString() : null;
+                    savingsData.push({ ...data, id: doc.id, amountSaved: parsedAmount, progress: parsedProgress, date: dateString });
                 });
                 dispatch(initializeSavings(savingsData));
             } else {
@@ -120,47 +120,50 @@ export const fetchInitialSavings = () => async (dispatch) => {
         toast.error("Error fetching initial savings data");
     }
 };
+
 export const fetchInitialBalance = () => async (dispatch) => {
     try {
         let userId;
-        // Listen for authentication state changes
+        console.log(userId);
         onAuthStateChanged(auth, async (user) => {
+            console.log("hello");
             if (user) {
                 userId = user.uid;
-                const balanceCollectionRef = collection(db, `users/${userId}/balance`);
-                const snapshot = await getDocs(balanceCollectionRef);
-                console.log(snapshot);
-                let balance = 0;
-                // snapshot.docs.forEach((doc) => {
-                //     savingsData.push({ ...doc.data(), id: doc.id });
-                // });
-                // dispatch(initializeSavings(savingsData));
+                const balanceDocRef = collection(db, `users/${userId}/balance`);
+                const balanceDocSnapshot = await getDocs(balanceDocRef);
+                if (balanceDocSnapshot.exists()) {
+                    const balanceData = balanceDocSnapshot.data();
+                    console.log(balanceData);
+                    dispatch(updateBalance(balanceData.balance));
+                } else {
+                    console.log("Balance document does not exist.");
+                    // You can handle this case if needed
+                }
             } else {
                 console.log("No user is currently signed in.");
             }
         });
     } catch (error) {
-        console.error("Error fetching initial savings: ", error);
-        toast.error("Error fetching initial savings data");
+        console.error("Error fetching initial balance: ", error);
+        toast.error("Error fetching initial balance data");
     }
 };
+
+
 
 
 export const addNewSavingFirestore = (savingData) => async (dispatch) => {
     try {
         let userId;
-        // Listen for authentication state changes
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 userId = user.uid;
                 const savingsCollectionRef = collection(db, `users/${userId}/savings`);
-
                 const { amount, daily, amountSaved, progress } = savingData;
                 savingData.amount = parseInt(amount);
                 savingData.daily = parseInt(daily);
                 savingData.amountSaved = parseInt(amountSaved);
                 savingData.progress = parseInt(progress);
-
                 const docRef = await addDoc(savingsCollectionRef, savingData);
                 dispatch(savingAdded({ ...savingData, id: docRef.id }));
                 toast.success("Saving Added Successfully");
@@ -181,15 +184,12 @@ export const updateSavingFirestore = (id, updatedData) => async (dispatch) => {
         const currentUser = auth.currentUser;
         if (currentUser) {
             const userId = currentUser.uid;
-            console.log("User ID:", userId);
-            if (typeof id === 'string' && id.trim() !== '') { // Check if id is a non-empty string
-                // console.log("Valid document ID detected.");
+            if (typeof id === 'string' && id.trim() !== '') {
                 const { amount, daily, amountSaved, progress } = savingData;
                 savingData.amount = parseInt(amount);
                 savingData.daily = parseInt(daily);
                 savingData.amountSaved = parseInt(amountSaved);
                 savingData.progress = parseInt(progress);
-                
                 const savingsCollectionRef = collection(db, `users/${userId}/savings`);
                 await updateDoc(doc(savingsCollectionRef, id), updatedData);
                 dispatch(updateSaving({ id, ...updatedData }));
@@ -217,8 +217,7 @@ export const deleteSavingFirestore = (id) => async (dispatch, getState) => {
         if (currentUser) {
             const userId = currentUser.uid;
             console.log("Deleting document with ID:", id);
-            if (typeof id === 'string' && id.trim() !== '') { // Check if id is a non-empty string
-                console.log("Valid document ID detected.");
+            if (typeof id === 'string' && id.trim() !== '') {
                 const savingsCollectionRef = collection(db, `users/${userId}/savings`);
                 await deleteDoc(doc(savingsCollectionRef, id));
                 dispatch(deleteSaving(id));
@@ -238,11 +237,8 @@ export const deleteSavingFirestore = (id) => async (dispatch, getState) => {
 };
 
 
-
-
-
-
 export const selectAllSavings = (state) => state.dashboard.savings;
+export const selectDailyCounts = state => state.dashboard.dailyCounts;
 export const addNewSaving = (state) => state.dashboard.addNew;
 export const profiler = (state) => state.dashboard.updateProfile;
 export const mobileNavClick = (state) => state.dashboard.mobileNav;

@@ -118,7 +118,10 @@ const SignIn = (
         <div className={`w-full h-full md:mx-6 ${isDarkMode ? "bg-black text-white" : "bg-white text-black"} mx-auto`}>
 
         {error && <p className={`${isDarkMode ? "text-white border-white" : "text-black border-black"} text-2xl text-center p-2 mx-2 border-2  mt-6 -mb-10 lg:mb-12 font-bold`}>{error}</p>}
-              <h3 className='font-extrabold lg:text-5xl text-3xl mt-16 lg:mt-28 text-center'>Log in into your account</h3>
+        <Link to="/">
+          <h1 className={`text-center justify-self-end mt-4 mx-4 w-1/5 text-xl ${isDarkMode ? "text-black bg-white" : "text-white bg-black"} p-2`}>Back</h1>
+        </Link>
+              <h3 className='font-extrabold lg:text-5xl text-3xl mt-4  lg:mt-20 text-center'>Log in into your account</h3>
               <form action="" className='md:w-1/2 lg:mx-auto mx-12 text-2xl' onSubmit={handleEmailSignIn}>
                 <div className='mt-6'>
                   <div className="flex flex-col">
@@ -151,11 +154,9 @@ const SignIn = (
                   </Link>
                   </div>
                   <button className={`w-full mx-auto text-center hover:border-2 py-4 text-2xl rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "}`}>Log in</button>
-                  {/* <button className={`w-full mx-auto justify-center items-center gap-4 hover:border-2 py-4 text-2xl rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "} flex`} onClick={handleSignInWithGoogle}><img src={isDarkMode ? googleDark : googleLight} alt="" width="50px"/>  Sign in with Google</button> */}
                 </div>
-                {/* <img src={isDarkMode ? lightLogo : darkLogo} alt="" /> */}
               </form>
-              <button className={` mx-auto justify-center items-center gap-4 hover:border-2 py-4 text-2xl rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "} flex w-2/3 px-auto`} onClick={handleSignInWithGoogle}><img src={isDarkMode ? googleDark : googleLight} alt="" width="50px"/>  Sign in with Google</button>
+              <button className={` mx-auto justify-center items-center gap-4 hover:border-2 py-4  rounded-lg cursor-pointer mt-6  ${isDarkMode ? "bg-white text-black hover:bg-black  hover:border-white hover:text-white" : "bg-black hover:text-black text-white hover:bg-white  hover:border-black "} flex w-2/3 px-auto text-lg md:text-xl lg:text-2xl`} onClick={handleSignInWithGoogle}><img src={isDarkMode ? googleDark : googleLight} alt="" width="50px" className='lg:w-12 w-6'/>  Sign in with Google</button>
               <Link to="/login">
                 <h2 className='mt-4 text-center text-xl'>New to Drag?<span className='text-gray-500 cursor-pointer'> Create an account</span></h2>
               </Link>

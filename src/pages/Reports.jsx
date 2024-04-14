@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import { selectDarkMode } from '../features/homeSlice';
 import SavingsTracker from './SavingsTracker';
+import { selectAllSavings } from '../features/dashSlice';
 const Reports = () => {
   const isDarkMode = useSelector(selectDarkMode);
+  const savings = useSelector(selectAllSavings);
   return (
     <div className="flex ">
       <div className="w-1/5 hidden md:block"></div>
@@ -10,15 +12,15 @@ const Reports = () => {
       <h1 className="font-bold xl:text-6xl text-3xl lg:text-5xl border-b border-gray-300">Your Reports</h1>
       <div className="flex flex-col lg:flex-row gap-16 mt-8">
       <div className={`flex flex-col justify-center items-center gap-2`}>
-                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>12</h1>
+                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>{savings.length}</h1>
                                 <h1 className=" text-base text-wrap md:text-2xl">Number of Savings</h1>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2">
-                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>12</h1>
+                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>0</h1>
                                 <h1 className=" text-base mt-2 text-wrap md:text-2xl">Completed Savings</h1>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-2">
-                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>12</h1>
+                                <h1 className={`p-2 md:p-4 rounded-full ${isDarkMode ? "text-white bg-black" : " text-black bg-white"}`}>{savings.length}</h1>
                                 <h1 className=" text-base mt-2 text-wrap md:text-2xl">Ongoing Savings</h1>
                             </div>
                 </div>

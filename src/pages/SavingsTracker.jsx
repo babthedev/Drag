@@ -5,40 +5,32 @@ import { selectDarkMode } from '../features/homeSlice';
 import { selectAllSavings } from '../features/dashSlice';
 
 const SavingsTracker = () => {
+  const [chartData, setChartData] = useState([]);
   const isDarkMode = useSelector(selectDarkMode);
   const savings = useSelector(selectAllSavings);
-  const [renderedBalance, setRenderedBalance] = useState(0);
-  console.log(savings);
 
   useEffect(() => {
-    // Fetch current date
     const currentDate = new Date();
-
-    // Generate data for 5 consecutive days
     const data = [];
-    for (let i = 0; i < 5; i++) {
-      // Calculate date for each day
+    
+    for (let i = 4; i >= 0; i--) {
       const date = new Date(currentDate);
-      date.setDate(currentDate.getDate() + i);
-
-      // Filter savings for the current date
+      date.setDate(currentDate.getDate() - i);
       const savingsForDate = savings.filter(saving => {
         const savingDate = new Date(saving.date);
         return savingDate.toDateString() === date.toDateString();
       });
-
-      // Push data for the current date
       data.push({
-        date: date.toLocaleDateString(), // Format date as string
-        savings: savingsForDate.length, // Number of savings for the current date
+        date: date.toLocaleDateString(),
+        savings: savingsForDate.length,
       });
     }
-
-    // Set the data for the chart
+    
     setChartData(data);
   }, [savings]);
 
-  const [chartData, setChartData] = useState([]);
+  // Track the number of new savings targets entered by each user every day for the last 5 days
+  const dailySavingsCounts = chartData.map(item => item.savings);
 
   return (
     <div className="overflow-hidden rounded-lg shadow-md">
@@ -55,7 +47,6 @@ const SavingsTracker = () => {
               <Bar dataKey="savings" fill={isDarkMode ? "#ffffff" : "#000000"} />
             </BarChart>
           </ResponsiveContainer>
-          
         </div>
       </div>
     </div>

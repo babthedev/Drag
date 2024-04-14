@@ -45,12 +45,12 @@ const SavingCard = ({ saving, progressPercentage }) => {
                     <p className='lg:text-2xl text-2xl md:text-3xl'>Daily Savings: {saving.daily}</p>
                     <p className='mb-8'></p>
                     <CircularProgressbar
-        value={progressPercentage}
+        value={parseInt(progressPercentage)}
         text={`${progressPercentage}`}
         styles={buildStyles({
           textColor: `${isDarkMode ? "#fff" : "#000"}`, // Text color
-          pathColor: `${isDarkMode ? "#000" : "#fff"}`, // Progress bar color
-          trailColor: `${isDarkMode ? "#fff" : "#000"}`, // Trail color (unfilled portion)
+          pathColor: `${isDarkMode ? "#fff" : "#000"}`, // Progress bar color
+          trailColor: `${isDarkMode ? "#000" : "#fff"}`, // Trail color (unfilled portion)
           textSize: '16px', // Text size
           pathTransitionDuration: 0.5, // Progress bar animation duration
         })}
